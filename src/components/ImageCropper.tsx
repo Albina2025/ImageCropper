@@ -1,6 +1,7 @@
 import React, { useState, useRef } from "react";
-import ReactCrop, { type PixelCrop } from "react-image-crop";
+import ReactCrop, {type PixelCrop } from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
+import { cropImageToCanvas } from "./utils";
 
 interface Props {
   src: string;
@@ -12,51 +13,69 @@ const ImageCropper: React.FC<Props> = ({ src, onCropComplete }) => {
     unit: "px",
     x: 0,
     y: 0,
-    width: 150,
-    height: 150
+    width: 200,
+    height: 200
   });
+
+  const [rotation, setRotation] = useState(0);
+  const [zoom, setZoom] = useState(1);
 
   const imgRef = useRef<HTMLImageElement | null>(null);
 
-  const getCroppedImage = () => {
+  const handleCrop = () => {
     if (!imgRef.current) return;
 
-    const canvas = document.createElement("canvas");
-    const scaleX = imgRef.current.naturalWidth / imgRef.current.width;
-    const scaleY = imgRef.current.naturalHeight / imgRef.current.height;
-
-    canvas.width = crop.width;
-    canvas.height = crop.height;
-
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-
-    ctx.drawImage(
+    const result = cropImageToCanvas(
       imgRef.current,
-      crop.x * scaleX,
-      crop.y * scaleY,
-      crop.width * scaleX,
-      crop.height * scaleY,
-      0,
-      0,
-      crop.width,
-      crop.height
+      crop,
+      rotation,
+      zoom
     );
 
-    onCropComplete(canvas.toDataURL("image/jpeg"));
+    onCropComplete(result);
   };
 
   return (
-    <div>
-      <ReactCrop crop={crop} onChange={(c) => setCrop(c)} aspect={1}>
+    <div style={{ maxWidth: 400, margin: "0 auto" }}>
+      <ReactCrop crop={crop} onChange={setCrop}  onComplete={setCrop}>  {/*aspect={1} */}
         <img
           ref={imgRef}
           src={src}
           alt="Crop"
+          style={{
+            maxWidth: "100%", 
+            transform: `scale(${zoom}) rotate(${rotation}deg)`
+          }}
         />
       </ReactCrop>
 
-      <button onClick={getCroppedImage}>
+   
+      <div style={{ marginTop: 12 }}>
+        <label>
+          Rotate:
+          <input
+            type="range"
+            min={0}
+            max={360}
+            value={rotation}
+            onChange={(e) => setRotation(+e.target.value)}
+          />
+        </label>
+
+        <label>
+          Zoom:
+          <input
+            type="range"
+            min={1}
+            max={3}
+            step={0.1}
+            value={zoom}
+            onChange={(e) => setZoom(+e.target.value)}
+          />
+        </label>
+      </div>
+
+      <button onClick={handleCrop}>
         Кыркып алуу
       </button>
     </div>
@@ -64,4 +83,3 @@ const ImageCropper: React.FC<Props> = ({ src, onCropComplete }) => {
 };
 
 export default ImageCropper;
-

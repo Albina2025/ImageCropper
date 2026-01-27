@@ -17,7 +17,7 @@ const App: React.FC = () => {
 
   return (
     <div className="container">
-      <h1 className="title">Сүрөт редактор</h1>
+      <h1 className="title">Редактор изображений</h1>
 
       <input className="inputs" type="file" accept="image/*" onChange={handleFileChange} />
 
@@ -29,8 +29,8 @@ const App: React.FC = () => {
       )}
 
       {croppedImage && (
-        <div className="mt-4">
-          <h2 className="font-semibold mb-2">Кыркылган сүрөт:</h2>
+        <div>
+          <h2>Обрезанное изображение:</h2>
           <img src={croppedImage} alt="Cropped" />
         </div>
       )}
