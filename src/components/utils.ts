@@ -1,10 +1,14 @@
-import {type PixelCrop } from "react-image-crop";
+import { type PixelCrop } from "react-image-crop";
+
+type ImageFormat = "image/jpeg" | "image/png" | "image/webp";
 
 export function cropImageToCanvas(
   image: HTMLImageElement,
   crop: PixelCrop,
   rotation: number,
-  zoom: number
+  zoom: number,
+  format: ImageFormat = "image/jpeg",
+  quality: number = 0.92
 ): string {
   const canvas = document.createElement("canvas");
   const ctx = canvas.getContext("2d");
@@ -33,5 +37,10 @@ export function cropImageToCanvas(
     crop.height
   );
 
-  return canvas.toDataURL("image/jpeg");
+
+  if (format === "image/png") {
+    return canvas.toDataURL(format);
+  }
+
+  return canvas.toDataURL(format, quality);
 }
