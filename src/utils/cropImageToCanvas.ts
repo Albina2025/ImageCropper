@@ -14,6 +14,8 @@ export function cropImageToCanvas(
   const ctx = canvas.getContext("2d");
   if (!ctx) return "";
 
+
+
   const scaleX = image.naturalWidth / image.width;
   const scaleY = image.naturalHeight / image.height;
 
@@ -44,3 +46,4 @@ export function cropImageToCanvas(
 
   return canvas.toDataURL(format, quality);
 }
+

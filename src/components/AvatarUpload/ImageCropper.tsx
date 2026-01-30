@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import ReactCrop, {type PixelCrop } from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
-import { cropImageToCanvas } from "./utils";
+import { cropImageToCanvas } from "../../utils/cropImageToCanvas";
 
 interface Props {
   src: string;

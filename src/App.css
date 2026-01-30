@@ -12,7 +12,6 @@ body {
 }
 
 .container {
-  max-width: 700px;
   margin: 0 auto;
   padding: 20px;
   background: #fff;
@@ -26,7 +25,4 @@ body {
 .title {
   text-align: center;
 }
-
-.inputs {
-  
-}
+        

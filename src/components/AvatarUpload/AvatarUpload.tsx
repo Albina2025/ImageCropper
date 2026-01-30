@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import ImageCropper from "./ImageCropper";
 
 interface Props {
-  size?: number;
+  size?: number;   
 }
 
-const AvatarUpload: React.FC<Props> = ({ size = 300 }) => {
+const AvatarUpload: React.FC<Props> = ({ size = 150}) => {
   const [avatar, setAvatar] = useState<string | null>(null);
   const [selectedFile, setSelectedFile] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -36,7 +36,7 @@ const AvatarUpload: React.FC<Props> = ({ size = 300 }) => {
         style={{
           position: "relative",
           width: size,
-          margin: "0 auto 12px",
+          margin: "50px auto",
         }}
       >
 
@@ -76,7 +76,7 @@ const AvatarUpload: React.FC<Props> = ({ size = 300 }) => {
             style={{
               position: "absolute",
               top: -6,
-              right: -10,
+              right: 8,
               width: 24,
               height: 24,
               borderRadius: "50%",
